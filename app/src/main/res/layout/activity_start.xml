@@ -62,7 +62,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/film6"
+            android:id="@+id/film5"
             android:layout_width="175dp"
             android:layout_height="175dp"
             android:layout_gravity="center"
