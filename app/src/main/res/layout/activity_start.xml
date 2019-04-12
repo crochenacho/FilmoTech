@@ -7,11 +7,77 @@
     android:orientation="vertical"
     tools:context="com.sourcey.materiallogindemo.StartActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="227dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="50dp"
-        android:text="@string/hola_me_llamo_paco" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/film1"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="FILM 1" />
+
+        <Button
+            android:id="@+id/film2"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="FILM 2" />
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/film3"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="FILM 3" />
+
+        <Button
+            android:id="@+id/film4"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="FILM 4" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="208dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/film6"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="FILM 6" />
+
+        <Button
+            android:id="@+id/film6"
+            android:layout_width="175dp"
+            android:layout_height="175dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
+            android:text="FILM 6" />
+
+
+    </LinearLayout>
+
 </LinearLayout>
