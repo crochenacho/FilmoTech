@@ -133,7 +133,7 @@ public class SignupActivity extends AppCompatActivity {
             _emailText.setError(null);
         }
 
-        if (mobile.isEmpty() || mobile.length()!=10) {
+        if (mobile.isEmpty() || mobile.length()!=9) {
             _mobileText.setError("Enter Valid Mobile Number");
             valid = false;
         } else {

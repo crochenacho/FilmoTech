@@ -1,7 +1,23 @@
 <resources>
-    <string name="app_name">Material Login Example</string>
+    <string name="app_name">FilmoTech</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="hola_me_llamo_paco">Hola me llamo paco</string>
+    <string name="film_4">FILM 4</string>
+    <string name="film_1">FILM 1</string>
+    <string name="film_2">FILM 2</string>
+    <string name="film_3">FILM 3</string>
+    <string name="film_5">FILM 5</string>
+    <string name="film_6">FILM 6</string>
+    <string-array name="listArray">
+        <item>Search</item>
+        <item>Watched</item>
+        <item>Pending</item>
+        <item>Settings</item>
+        <item>About Us</item>
+        <item>Logout</item>
+
+    </string-array>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 </resources>
