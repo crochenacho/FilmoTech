@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.sourcey.materiallogindemo.AllActivity">
+    android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/film1"
-        android:layout_marginTop="50dp"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:text="FILM 1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/film2"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="350dp"
-        android:layout_gravity="center"
-        android:text="FILM 2" />
+        <Button
+            android:id="@+id/film1"
+            android:layout_marginTop="50dp"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:text="FILM 1" />
 
-    <Button
-        android:id="@+id/film3"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="350dp"
-        android:layout_gravity="center"
-        android:text="FILM 3" />
+        <Button
+            android:id="@+id/film2"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:text="FILM 2" />
 
-    <Button
-        android:id="@+id/film4"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="350dp"
-        android:layout_gravity="center"
-        android:text="FILM 4" />
+        <Button
+            android:id="@+id/film3"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:text="FILM 3" />
 
-    <Button
-        android:id="@+id/film5"
-        android:layout_height="100dp"
-        android:layout_marginTop="20dp"
-        android:layout_width="350dp"
-        android:layout_gravity="center"
-        android:text="FILM 5" />
-</LinearLayout>
+        <Button
+            android:id="@+id/film4"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:text="FILM 4" />
+
+        <Button
+            android:id="@+id/film5"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_width="350dp"
+            android:layout_gravity="center"
+            android:text="FILM 5" />
+    </LinearLayout>
+
+        <ListView android:id="@+id/left_drawer"
+            android:layout_width="240dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:background="@color/accent"/>
+</android.support.v4.widget.DrawerLayout>

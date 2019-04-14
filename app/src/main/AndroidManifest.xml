@@ -23,6 +23,15 @@
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.Dark" />
+        <activity
+            android:name=".AllActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
