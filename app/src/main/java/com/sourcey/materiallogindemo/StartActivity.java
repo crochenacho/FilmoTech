@@ -3,10 +3,12 @@ package com.sourcey.materiallogindemo;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -94,6 +96,10 @@ public class StartActivity extends AppCompatActivity {
         //Share Action Provider
         MenuItem menuItem = menu.findItem(R.id.action_logo);
 
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+            // Configure the search info and add any event listeners
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -113,7 +119,10 @@ public class StartActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.item_list:
+            /*case R.id.action_search:
+                [...]
+                break;
+            case R.id.item_list:
                 Intent intent2 = new Intent(this, LoginActivity.class);
                 startActivity(intent2);
                 break;*/
