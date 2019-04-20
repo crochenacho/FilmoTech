@@ -2,23 +2,19 @@ package com.sourcey.materiallogindemo;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class StartActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -27,7 +23,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_settings);
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -45,14 +41,9 @@ public class StartActivity extends AppCompatActivity {
             }
         };
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        drawerListView.setOnItemClickListener(new SettingsActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-    }
-
-    private void logout() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
     }
 
     private void selectItem(int position) {
@@ -60,8 +51,7 @@ public class StartActivity extends AppCompatActivity {
         Intent intent = null;
         switch(position){
             case 0:
-                intent = new Intent(this, AllActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(this, AllActivity.class));
                 return;
             case 1:
                 intent = new Intent(this, AllActivity.class);
@@ -88,17 +78,19 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
-        @Override
+    private void logout() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         //Share Action Provider
         MenuItem menuItem = menu.findItem(R.id.action_logo);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-            // Configure the search info and add any event listeners
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -119,10 +111,7 @@ public class StartActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, StartActivity.class);
                 startActivity(intent);
                 break;
-            /*case R.id.action_search:
-                [...]
-                break;
-            case R.id.item_list:
+            /*case R.id.item_list:
                 Intent intent2 = new Intent(this, LoginActivity.class);
                 startActivity(intent2);
                 break;*/
@@ -148,24 +137,4 @@ public class StartActivity extends AppCompatActivity {
             selectItem(position);
         }
     }
-   /* public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch(item.getItemId()) {
-            case R.id.action_all:
-                Intent intent = new Intent(getApplicationContext(), AllActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-        return true;
-    }*/
 }
