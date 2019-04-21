@@ -40,6 +40,11 @@
             android:label="About Us"
             android:noHistory="true"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name=".FilmActivity"
+            android:label="Film"
+            android:noHistory="true"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

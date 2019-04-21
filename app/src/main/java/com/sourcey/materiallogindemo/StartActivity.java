@@ -15,19 +15,32 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
+import butterknife.BindView;
 
 public class StartActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
+    @BindView(R.id.film1) Button _filmBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+//        _filmBtn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent;
+//                intent = new Intent(this, FilmActivity.class);
+//                startActivity(intent);
+//            }
+//        });
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -68,18 +81,14 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             case 2:
-                intent = new Intent(this, AllActivity.class);
-                startActivity(intent);
-                return;
-            case 3:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return;
-            case 4:
+            case 3:
                 intent = new Intent(this, AboutUsActivity.class);
                 startActivity(intent);
                 return;
-            case 5:
+            case 4:
                 logout();
                 return;
             default:
@@ -147,6 +156,11 @@ public class StartActivity extends AppCompatActivity {
         public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
         }
+    }
+
+    public void transToFilm(View drawerView){
+        Intent intent = new Intent(this, FilmActivity.class);
+        startActivity(intent);
     }
    /* public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
