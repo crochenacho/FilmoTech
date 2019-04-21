@@ -51,25 +51,22 @@ public class AboutUsActivity extends AppCompatActivity  {
         Intent intent = null;
         switch(position){
             case 0:
-                startActivity(new Intent(this, AllActivity.class));
+                intent = new Intent(this, AllActivity.class);
+                startActivity(intent);
                 return;
             case 1:
                 intent = new Intent(this, AllActivity.class);
                 startActivity(intent);
                 return;
             case 2:
-                intent = new Intent(this, AllActivity.class);
-                startActivity(intent);
-                return;
-            case 3:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return;
-            case 4:
+            case 3:
                 intent = new Intent(this, AboutUsActivity.class);
                 startActivity(intent);
                 return;
-            case 5:
+            case 4:
                 logout();
                 return;
             default:

@@ -10,13 +10,14 @@
         android:layout_height="match_parent">
 
 
-        <EditText
+        <TextView
             android:id="@+id/editText"
             android:layout_width="350dp"
-            android:layout_height="721dp"
+            android:layout_height="686dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginTop="10dp"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:layout_marginLeft="35dp"
             android:text="Esta pagina tiene el about us. Somos un grupo de estudiantes que han hecho una app top" />
     </FrameLayout>
     

@@ -2,21 +2,19 @@ package com.sourcey.materiallogindemo;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ListView;
 
-public class AllActivity extends AppCompatActivity {
+public class FilmActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -25,7 +23,7 @@ public class AllActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_all);
+        setContentView(R.layout.activity_film);
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -43,7 +41,7 @@ public class AllActivity extends AppCompatActivity {
             }
         };
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        drawerListView.setOnItemClickListener(new AllActivity.DrawerItemClickListener());
+        drawerListView.setOnItemClickListener(new FilmActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -61,7 +59,7 @@ public class AllActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             case 2:
-                intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, FilmActivity.class);
                 startActivity(intent);
                 return;
             case 3:
