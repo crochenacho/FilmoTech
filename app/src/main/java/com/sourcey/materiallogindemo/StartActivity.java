@@ -32,15 +32,17 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-//        _filmBtn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent;
-//                intent = new Intent(this, FilmActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        _filmBtn = (Button) findViewById(R.id.film1);
+        if(_filmBtn != null) {
+            _filmBtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), FilmActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
