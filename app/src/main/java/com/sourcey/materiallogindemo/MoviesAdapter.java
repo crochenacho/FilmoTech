@@ -27,6 +27,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         // TODO: Populate adapter with movies
         if(movies != null)
+            System.out.println("pelicula0: " + movies.get(0) + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             holder.bind(movies.get(position));
 
     }

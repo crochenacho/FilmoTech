@@ -24,23 +24,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        moviesRepository = MoviesRepository.getInstance();
-
-        moviesList = findViewById(R.id.movies_list);
-        moviesList.setLayoutManager(new LinearLayoutManager(this));
-        //moviesList.setAdapter(new MoviesAdapter());
-        moviesRepository.getMovies(new OnGetMoviesCallback() {
-            @Override
-            public void onSuccess(List<Movie> movies) {
-                adapter = new MoviesAdapter(movies);
-                moviesList.setAdapter(adapter);
-            }
-
-            @Override
-            public void onError() {
-                Toast.makeText(MainActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        moviesRepository = MoviesRepository.getInstance();
+//
+//        moviesList = findViewById(R.id.movies_list);
+//        moviesList.setLayoutManager(new LinearLayoutManager(this));
+//        //moviesList.setAdapter(new MoviesAdapter());
+//        moviesRepository.getMovies(new OnGetMoviesCallback() {
+//            @Override
+//            public void onSuccess(List<Movie> movies) {
+//                adapter = new MoviesAdapter(movies);
+//                moviesList.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onError() {
+//                Toast.makeText(MainActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 
   /*  @Override
