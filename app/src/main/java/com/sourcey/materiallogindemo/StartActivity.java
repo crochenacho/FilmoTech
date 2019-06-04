@@ -8,6 +8,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -27,6 +32,10 @@ public class StartActivity extends AppCompatActivity {
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
     @BindView(R.id.film1) Button _filmBtn;
+    private RecyclerView moviesList;
+    private MoviesAdapter adapter;
+
+    private MoviesRepository moviesRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,24 @@ public class StartActivity extends AppCompatActivity {
         drawerListView.setOnItemClickListener(new DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        moviesRepository = MoviesRepository.getInstance();
+
+        moviesList = findViewById(R.id.movies_list);
+        moviesList.setLayoutManager(new LinearLayoutManager(this));
+        //moviesList.setAdapter(new MoviesAdapter());
+        moviesRepository.getMovies(new OnGetMoviesCallback() {
+            @Override
+            public void onSuccess(List<Movie> movies) {
+                adapter = new MoviesAdapter(movies);
+                moviesList.setAdapter(adapter);
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(StartActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void logout() {
