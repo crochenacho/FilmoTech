@@ -1,19 +1,28 @@
 package com.sourcey.materiallogindemo;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewHolder> {
 
+    private List<Genre> allGenres;
     private List<Movie> movies;
+    private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
 
-    public MoviesAdapter(List<Movie> movies) {
+    public MoviesAdapter(List<Movie> movies, List<Genre> allGenres) {
         this.movies = movies;
+        this.allGenres = allGenres;
     }
     public MoviesAdapter() {
     }
@@ -43,6 +52,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
         TextView title;
         TextView rating;
         TextView genres;
+        ImageView poster;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
@@ -50,13 +60,31 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
             title = itemView.findViewById(R.id.item_movie_title);
             rating = itemView.findViewById(R.id.item_movie_rating);
             genres = itemView.findViewById(R.id.item_movie_genre);
+            poster = itemView.findViewById(R.id.item_movie_poster);
         }
 
         public void bind(Movie movie) {
             releaseDate.setText(movie.getReleaseDate().split("-")[0]);
             title.setText(movie.getTitle());
             rating.setText(String.valueOf(movie.getRating()));
-            genres.setText("");
+            genres.setText(getGenres(movie.getGenreIds()));
+            Glide.with(itemView)
+                    .load(IMAGE_BASE_URL + movie.getPosterPath())
+                    .apply(RequestOptions.placeholderOf(R.color.primary))
+                    .into(poster);
+        }
+
+        private String getGenres(List<Integer> genreIds) {
+            List<String> movieGenres = new ArrayList<>();
+            for (Integer genreId : genreIds) {
+                for (Genre genre : allGenres) {
+                    if (genre.getId() == genreId) {
+                        movieGenres.add(genre.getName());
+                        break;
+                    }
+                }
+            }
+            return TextUtils.join(", ", movieGenres);
         }
     }
 }
