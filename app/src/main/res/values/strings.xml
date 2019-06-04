@@ -10,7 +10,6 @@
     <string name="film_5">FILM 5</string>
     <string name="film_6">FILM 6</string>
     <string-array name="listArray">
-        <item>Search</item>
         <item>Watched</item>
         <item>Pending</item>
         <item>Settings</item>
@@ -20,4 +19,5 @@
     </string-array>
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
+    <string name="description">description</string>
 </resources>

@@ -14,7 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-public class SettingsActivity extends AppCompatActivity {
+public class FilmActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_film);
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         };
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        drawerListView.setOnItemClickListener(new SettingsActivity.DrawerItemClickListener());
+        drawerListView.setOnItemClickListener(new FilmActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
     }
@@ -59,7 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             case 2:
-                intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, FilmActivity.class);
                 startActivity(intent);
                 return;
             case 3:
