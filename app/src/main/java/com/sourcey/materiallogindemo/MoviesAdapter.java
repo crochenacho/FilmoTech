@@ -26,7 +26,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     @Override
     public void onBindViewHolder(MovieViewHolder holder, int position) {
         // TODO: Populate adapter with movies
-        holder.bind(movies.get(position));
+        if(movies != null)
+            holder.bind(movies.get(position));
 
     }
 

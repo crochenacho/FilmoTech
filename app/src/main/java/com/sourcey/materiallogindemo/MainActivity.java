@@ -28,13 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
         moviesList = findViewById(R.id.movies_list);
         moviesList.setLayoutManager(new LinearLayoutManager(this));
-        moviesList.setHasFixedSize(true);
-
+        //moviesList.setAdapter(new MoviesAdapter());
         moviesRepository.getMovies(new OnGetMoviesCallback() {
             @Override
             public void onSuccess(List<Movie> movies) {
                 adapter = new MoviesAdapter(movies);
-                System.out.println("aaaaaaaaaaaaaaaaaaaa: " + adapter);
                 moviesList.setAdapter(adapter);
             }
 
