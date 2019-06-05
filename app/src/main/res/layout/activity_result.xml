@@ -9,14 +9,14 @@
     tools:context=".StartActivity">
     <!-- The main content view -->
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/movies_list"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/movies_list"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
         android:layout_width="240dp"

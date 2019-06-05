@@ -58,6 +58,30 @@ public class MoviesRepository {
                 });
     }
 
+    public void getMoviesSearch(String query, int pages, final OnGetMoviesCallback callback) {
+        api.getMovieSearch("c2ba2a2e0940ab4ad5988c9d704dd7b4", LANGUAGE, query, pages)
+                .enqueue(new Callback<MoviesResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
+                        if (response.isSuccessful()) {
+                            MoviesResponse moviesResponse = response.body();
+                            if (moviesResponse != null && moviesResponse.getMovies() != null) {
+                                callback.onSuccess(moviesResponse.getPage(), moviesResponse.getMovies());
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MoviesResponse> call, Throwable t) {
+                        callback.onError();
+                    }
+                });
+    }
+
     public void getGenres(final OnGetGenresCallback callback) {
         api.getGenres("c2ba2a2e0940ab4ad5988c9d704dd7b4", LANGUAGE)
                 .enqueue(new Callback<GenresResponse>() {

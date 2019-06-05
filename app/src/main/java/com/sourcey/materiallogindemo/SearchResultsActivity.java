@@ -1,28 +1,26 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SyncStatusObserver;
 import android.content.res.Configuration;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -30,7 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 
-public class StartActivity extends AppCompatActivity {
+public class SearchResultsActivity extends AppCompatActivity {
+
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -61,6 +60,7 @@ public class StartActivity extends AppCompatActivity {
                 }
             });
         }
+
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -78,7 +78,7 @@ public class StartActivity extends AppCompatActivity {
             }
         };
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        drawerListView.setOnItemClickListener(new DrawerItemClickListener());
+        drawerListView.setOnItemClickListener(new SearchResultsActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -87,29 +87,34 @@ public class StartActivity extends AppCompatActivity {
         moviesList = findViewById(R.id.movies_list);
         moviesList.setLayoutManager(new LinearLayoutManager(this));
 
-        setupOnScrollListener();
 
-        getGenres();
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            setupOnScrollListener(query);
+            getGenres(query);
+        }
+
     }
 
-    private void getGenres() {
-    moviesRepository.getGenres(new OnGetGenresCallback() {
-        @Override
-        public void onSuccess(List<Genre> genres) {
-            movieGenres = genres;
-            getMovies(currentPage);
-        }
+    private void getGenres(final String query) {
+        moviesRepository.getGenres(new OnGetGenresCallback() {
+            @Override
+            public void onSuccess(List<Genre> genres) {
+                movieGenres = genres;
+                getMovies(currentPage, query);
+            }
 
-        @Override
-        public void onError() {
-            showError();
-        }
-    });
-}
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
 
-    private void getMovies(int page) {
+    private void getMovies(int page, String query) {
         isFetchingMovies = true;
-        moviesRepository.getMovies(page, new OnGetMoviesCallback() {
+        moviesRepository.getMoviesSearch(query, page, new OnGetMoviesCallback() {
             @Override
             public void onSuccess(int page, List<Movie> movies) {
                 Log.d("MoviesRepository", "Current Page = " + page);
@@ -133,14 +138,13 @@ public class StartActivity extends AppCompatActivity {
     OnMoviesClickCallback callback = new OnMoviesClickCallback() {
         @Override
         public void onClick(Movie movie) {
-            Intent intent = new Intent(StartActivity.this, FilmActivity.class);
+            Intent intent = new Intent(SearchResultsActivity.this, FilmActivity.class);
             intent.putExtra(FilmActivity.MOVIE_ID, movie.getId());
             startActivity(intent);
         }
     };
 
-
-    private void setupOnScrollListener() {
+    private void setupOnScrollListener(final String query) {
         final LinearLayoutManager manager = new LinearLayoutManager(this);
         moviesList.setLayoutManager(manager);
         moviesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -152,7 +156,7 @@ public class StartActivity extends AppCompatActivity {
 
                 if (firstVisibleItem + visibleItemCount >= totalItemCount) {
                     if (!isFetchingMovies) {
-                        getMovies(currentPage + 1);
+                        getMovies(currentPage + 1, query);
                     }
                 }
             }
@@ -160,7 +164,7 @@ public class StartActivity extends AppCompatActivity {
     }
 
     private void showError() {
-        Toast.makeText(StartActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(SearchResultsActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
     }
 
     private void logout() {
@@ -260,29 +264,4 @@ public class StartActivity extends AppCompatActivity {
             selectItem(position);
         }
     }
-
-    public void transToFilm(View drawerView){
-        Intent intent = new Intent(this, FilmActivity.class);
-        startActivity(intent);
-    }
-   /* public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the action bar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch(item.getItemId()) {
-            case R.id.action_all:
-                Intent intent = new Intent(getApplicationContext(), AllActivity.class);
-                startActivity(intent);
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-        return true;
-    }*/
 }
