@@ -7,18 +7,47 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FilmActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
+
+    public static String MOVIE_ID = "movie_id";
+    private static String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w780";
+    private static String YOUTUBE_VIDEO_URL = "http://www.youtube.com/watch?v=%s";
+    private static String YOUTUBE_THUMBNAIL_URL = "http://img.youtube.com/vi/%s/0.jpg";
+
+    private ImageView moviePoster;
+    private TextView movieTitle;
+    private TextView movieGenres;
+    private TextView movieOverview;
+    private TextView movieOverviewLabel;
+    private TextView movieReleaseDate;
+    private RatingBar movieRating;
+    private LinearLayout movieTrailers;
+    private LinearLayout movieReviews;
+    private MoviesRepository moviesRepository;
+    private int movieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +73,79 @@ public class FilmActivity extends AppCompatActivity {
         drawerListView.setOnItemClickListener(new FilmActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+        movieId = getIntent().getIntExtra(MOVIE_ID, movieId);
+        moviesRepository = MoviesRepository.getInstance();
+        initUI();
+        getMovie();
+    }
+
+    private void initUI() {
+        moviePoster = findViewById(R.id.imageView);
+        movieTitle = findViewById(R.id.textView2);
+        movieGenres = findViewById(R.id.genres);
+        movieOverview = findViewById(R.id.sinopsis);
+        movieOverviewLabel = findViewById(R.id.director);
+        movieReleaseDate = findViewById(R.id.release);
+        movieRating = findViewById(R.id.ratingBar);
+       // movieTrailers = findViewById(R.id.movieTrailers);
+        //movieReviews = findViewById(R.id.movieReviews);
+    }
+
+    private void getMovie() {
+        moviesRepository.getMovie(movieId, new OnGetMovieCallback() {
+            @Override
+            public void onSuccess(Movie movie) {
+                movieTitle.setText(movie.getTitle());
+                movieOverviewLabel.setVisibility(View.VISIBLE);
+                movieOverview.setText(movie.getOverview());
+                movieRating.setVisibility(View.VISIBLE);
+                //movieRating.setNumStars(5);
+                movieRating.setRating(movie.getRating() / 2);
+                getGenres(movie);
+                movieReleaseDate.setText(movie.getReleaseDate());
+                if (!isFinishing()) {
+                    Glide.with(FilmActivity.this)
+                            .load(IMAGE_BASE_URL + movie.getBackdrop())
+                            .apply(RequestOptions.placeholderOf(R.color.primary))
+                            .into(moviePoster);
+                }
+            }
+
+            @Override
+            public void onError() {
+                finish();
+            }
+        });
+    }
+
+    private void getGenres(final Movie movie) {
+        moviesRepository.getGenres(new OnGetGenresCallback() {
+            @Override
+            public void onSuccess(List<Genre> genres) {
+                if (movie.getGenres() != null) {
+                    List<String> currentGenres = new ArrayList<>();
+                    for (Genre genre : movie.getGenres()) {
+                        currentGenres.add(genre.getName());
+                    }
+                    movieGenres.setText(TextUtils.join(", ", currentGenres));
+                }
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        onBackPressed();
+//        return true;
+//    }
+    private void showError() {
+        Toast.makeText(FilmActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
     }
 
     private void selectItem(int position) {

@@ -111,7 +111,7 @@ public class StartActivity extends AppCompatActivity {
             public void onSuccess(int page, List<Movie> movies) {
                 Log.d("MoviesRepository", "Current Page = " + page);
                 if (adapter == null) {
-                    adapter = new MoviesAdapter(movies, movieGenres);
+                    adapter = new MoviesAdapter(movies, movieGenres, callback);
                     moviesList.setAdapter(adapter);
                 } else {
                     adapter.appendMovies(movies);
@@ -126,6 +126,16 @@ public class StartActivity extends AppCompatActivity {
             }
         });
     }
+
+    OnMoviesClickCallback callback = new OnMoviesClickCallback() {
+        @Override
+        public void onClick(Movie movie) {
+            Intent intent = new Intent(StartActivity.this, FilmActivity.class);
+            intent.putExtra(FilmActivity.MOVIE_ID, movie.getId());
+            startActivity(intent);
+        }
+    };
+
 
     private void setupOnScrollListener() {
         final LinearLayoutManager manager = new LinearLayoutManager(this);

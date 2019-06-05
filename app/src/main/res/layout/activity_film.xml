@@ -21,39 +21,59 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="203dp"
                 android:src="@drawable/logo" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="198dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="25dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Film name"
-                    android:textSize="32dp" />
-
-                <TextView
-                    android:id="@+id/actor"
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:text="Actor " />
-
-                <TextView
-                    android:id="@+id/director"
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:text="Director " />
-            </LinearLayout>
-
         </LinearLayout>
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="198dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="25dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Film name"
+                android:textSize="32dp" />
+
+            <TextView
+                android:id="@+id/actor"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="Actor " />
+
+            <TextView
+                android:id="@+id/director"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:text="Director " />
+
+            <TextView
+                android:id="@+id/release"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/genres"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="30dp"
+                android:theme="@style/RatingBar"/>
+
+        </LinearLayout>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -75,7 +95,7 @@
             android:layout_marginLeft="10dp" >
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/sinopsis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="This movie is about a group of friends who run into some problems"
