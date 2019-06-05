@@ -34,15 +34,15 @@ public class MoviesRepository {
         return repository;
     }
 
-    public void getMovies(final OnGetMoviesCallback callback) {
-        api.getPopularMovies("c2ba2a2e0940ab4ad5988c9d704dd7b4", LANGUAGE, 1)
+    public void getMovies(int pages, final OnGetMoviesCallback callback) {
+        api.getPopularMovies("c2ba2a2e0940ab4ad5988c9d704dd7b4", LANGUAGE, pages)
                 .enqueue(new Callback<MoviesResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<MoviesResponse> call, @NonNull Response<MoviesResponse> response) {
                         if (response.isSuccessful()) {
                             MoviesResponse moviesResponse = response.body();
                             if (moviesResponse != null && moviesResponse.getMovies() != null) {
-                                callback.onSuccess(moviesResponse.getMovies());
+                                callback.onSuccess(moviesResponse.getPage(), moviesResponse.getMovies());
                             } else {
                                 callback.onError();
                             }
