@@ -1,6 +1,9 @@
 package com.sourcey.materiallogindemo;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SyncStatusObserver;
 import android.content.res.Configuration;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
@@ -184,7 +187,7 @@ public class StartActivity extends AppCompatActivity {
 
     }
 
-        @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -192,11 +195,14 @@ public class StartActivity extends AppCompatActivity {
         //Share Action Provider
         MenuItem menuItem = menu.findItem(R.id.action_logo);
 
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-            // Configure the search info and add any event listeners
-
-        return super.onCreateOptionsMenu(menu);
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        System.out.println(searchManager.getSearchableInfo(getComponentName()));
+        return true;
     }
 
     @Override
@@ -216,9 +222,9 @@ public class StartActivity extends AppCompatActivity {
                 startActivity(intent);
                 break;
             /*case R.id.action_search:
-                [...]
-                break;
-            case R.id.item_list:
+
+                break;*/
+            /*case R.id.item_list:
                 Intent intent2 = new Intent(this, LoginActivity.class);
                 startActivity(intent2);
                 break;*/
