@@ -75,7 +75,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:numStars="5"
-                    android:theme="@style/RatingBar" />
+                    android:theme="@style/RatingBar"
+                    android:isIndicator="true"/>
 
             </LinearLayout>
 
@@ -103,6 +104,7 @@
                     android:id="@+id/sinopsis"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="30dp"
                     android:text="This movie is about a group of friends who run into some problems"
                     android:textSize="16dp" />
 

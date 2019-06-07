@@ -16,17 +16,43 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
-
+    private Spinner miSpinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        miSpinner= (Spinner) findViewById(R.id.miSpinner);
+
+        ArrayList<String> lenguajes= new ArrayList<>();
+        lenguajes.add("Español");
+        lenguajes.add("English");
+
+        ArrayAdapter adp= new ArrayAdapter(SettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, lenguajes);
+        miSpinner.setAdapter(adp);
+        miSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String lenguaje=(String) miSpinner.getAdapter().getItem(i);
+
+                Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
