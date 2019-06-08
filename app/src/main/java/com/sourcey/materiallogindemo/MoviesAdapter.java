@@ -20,12 +20,15 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MovieViewH
     private List<Movie> movies;
     private String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w500";
     private OnMoviesClickCallback callback;
+    private ListResponse listResponse;
+    private MovieList movieList;
 
 
-    public MoviesAdapter(List<Movie> movies, List<Genre> allGenres, OnMoviesClickCallback callback) {
+    public MoviesAdapter(List<Movie> movies, List<Genre> allGenres, OnMoviesClickCallback callback, MovieList movieList) {
         this.callback = callback;
         this.movies = movies;
         this.allGenres = allGenres;
+        this.movieList = movieList;
     }
     public MoviesAdapter() {
     }

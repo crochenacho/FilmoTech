@@ -35,13 +35,15 @@ public class StartActivity extends AppCompatActivity {
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.film1) Button _filmBtn;
+   // @BindView(R.id.film1) Button _filmBtn;
     private RecyclerView moviesList;
     private MoviesAdapter adapter;
 
     private MoviesRepository moviesRepository;
 
     private List<Genre> movieGenres;
+
+    private MovieList movieList;
 
     private boolean isFetchingMovies;
     private int currentPage = 1;
@@ -50,7 +52,7 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-        _filmBtn = (Button) findViewById(R.id.film1);
+       /* _filmBtn = (Button) findViewById(R.id.film1);
         if(_filmBtn != null) {
             _filmBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -60,7 +62,7 @@ public class StartActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
+        }*/
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -114,7 +116,7 @@ public class StartActivity extends AppCompatActivity {
             public void onSuccess(int page, List<Movie> movies) {
                 Log.d("MoviesRepository", "Current Page = " + page);
                 if (adapter == null) {
-                    adapter = new MoviesAdapter(movies, movieGenres, callback);
+                    adapter = new MoviesAdapter(movies, movieGenres, callback, movieList);
                     moviesList.setAdapter(adapter);
                 } else {
                     adapter.appendMovies(movies);

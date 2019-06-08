@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -78,6 +79,8 @@ public class FilmActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         movieId = getIntent().getIntExtra(MOVIE_ID, movieId);
+        Log.d("MoviesId", "Current id = " + movieId);
+
         moviesRepository = MoviesRepository.getInstance();
         initUI();
         getMovie();
@@ -164,7 +167,7 @@ public class FilmActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             case 2:
-                intent = new Intent(this, FilmActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return;
             case 3:

@@ -1,6 +1,7 @@
 package com.sourcey.materiallogindemo;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -125,6 +126,72 @@ public class MoviesRepository {
 
                     @Override
                     public void onFailure(Call<Movie> call, Throwable t) {
+                        callback.onError();
+                    }
+                });
+    }
+
+    public void getList(Integer listId, final OnGetListCallback callback) {
+        api.getList(listId, "c2ba2a2e0940ab4ad5988c9d704dd7b4", LANGUAGE)
+                .enqueue(new Callback<MovieList>() {
+                    @Override
+                    public void onResponse(Call<MovieList> call, Response<MovieList> response) {
+                        if (response.isSuccessful()) {
+                            MovieList movieList = response.body();
+                            if (movieList != null) {
+                                callback.onSuccess(movieList);
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MovieList> call, Throwable t) {
+                        callback.onError();
+                    }
+                });
+    }
+
+    public void createList(int pages, final OnCreateListCallback callback) {
+       /* ParamsBody params = new ParamsBody("Watched", "List of watched movies", LANGUAGE);
+        ListTask listTask = new ListTask() {
+            @Override
+            public Call<ParamsBody> createTask(ParamsBody params) {
+                return null;
+            }
+        };
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://face-location.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        ListTask api = retrofit.create(ListTask.class);
+        Call<ParamsBody> call = api.createTask(params);
+        Log.i(TAG, "Works until here");
+
+        Call<ParamsBody> call = listTask.createTask(params);*/
+        api.createList("c2ba2a2e0940ab4ad5988c9d704dd7b4", "6dead99aeb0031f71f751067db8ee18172b54ff3",
+                "Watched", "List of watched movies", LANGUAGE)
+                .enqueue(new Callback<ListResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<ListResponse> call, @NonNull Response<ListResponse> response) {
+                        if (response.isSuccessful()) {
+                            ListResponse listResponse = response.body();
+                            if (listResponse != null && listResponse.getId() != null) {
+                                callback.onSuccess(listResponse, listResponse.getId());
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ListResponse> call, Throwable t) {
                         callback.onError();
                     }
                 });

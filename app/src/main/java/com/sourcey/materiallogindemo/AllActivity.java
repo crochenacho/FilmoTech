@@ -9,7 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +22,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -27,13 +36,25 @@ public class AllActivity extends AppCompatActivity {
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
-    @BindView(R.id.film1) Button _filmBtn;
+   // @BindView(R.id.film1) Button _filmBtn;
+
+    public static String LIST_ID = "list_id";
+    private static String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w780";
+    private static String YOUTUBE_VIDEO_URL = "http://www.youtube.com/watch?v=%s";
+    private static String YOUTUBE_THUMBNAIL_URL = "http://img.youtube.com/vi/%s/0.jpg";
+    private MoviesRepository moviesRepository;
+    private int listId;
+    private RecyclerView moviesList;
+    private MoviesAdapter adapter;
+    private boolean isFetchingMovies;
+    private int currentPage = 1;
+    private List<Genre> movieGenres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all);
-        _filmBtn = (Button) findViewById(R.id.film1);
+        /*_filmBtn = (Button) findViewById(R.id.film1);
         if(_filmBtn != null) {
             _filmBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -43,7 +64,7 @@ public class AllActivity extends AppCompatActivity {
                     startActivity(intent);
                 }
             });
-        }
+        }*/
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -64,8 +85,92 @@ public class AllActivity extends AppCompatActivity {
         drawerListView.setOnItemClickListener(new AllActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+       // listId = getIntent().getIntExtra(LIST_ID, listId);
+        listId = 113633;
+        moviesRepository = MoviesRepository.getInstance();
+        moviesList = findViewById(R.id.movies_list);
+        moviesList.setLayoutManager(new LinearLayoutManager(this));
+        getGenres();
+        //getList();
     }
 
+    private void getGenres() {
+        moviesRepository.getGenres(new OnGetGenresCallback() {
+            @Override
+            public void onSuccess(List<Genre> genres) {
+                Log.d("MoviesGenres", "Genre  = " + genres.get(0).getName());
+                movieGenres = genres;
+                getList();
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    private void getList() {
+        isFetchingMovies = true;
+        moviesRepository.getList(listId, new OnGetListCallback() {
+            @Override
+            public void onSuccess(MovieList movieList) {
+                movieList.getItem_count();
+                Log.d("MoviesList", "Movies Count = " + movieList.getItem_count());
+                Log.d("MoviesList", "Movie  = " + movieList.getItems().get(0).getTitle());
+
+                List<Movie> movies = movieList.getItems();
+                if (adapter == null) {
+                    adapter = new MoviesAdapter(movies, movieGenres, callback, movieList);
+                    moviesList.setAdapter(adapter);
+                } else {
+                    adapter.appendMovies(movies);
+                }
+                //currentPage = page;
+                isFetchingMovies = false;
+               /* findViewById(R.id.textView2).setText(movie.getTitle());
+                findViewById(R.id.sinopsis).setText(movie.getOverview());*/
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    OnMoviesClickCallback callback = new OnMoviesClickCallback() {
+        @Override
+        public void onClick(Movie movie) {
+            Intent intent = new Intent(AllActivity.this, FilmActivity.class);
+            intent.putExtra(FilmActivity.MOVIE_ID, movie.getId());
+            startActivity(intent);
+        }
+    };
+
+    private void setupOnScrollListener() {
+        final LinearLayoutManager manager = new LinearLayoutManager(this);
+        moviesList.setLayoutManager(manager);
+        moviesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int totalItemCount = manager.getItemCount();
+                int visibleItemCount = manager.getChildCount();
+                int firstVisibleItem = manager.findFirstVisibleItemPosition();
+
+                if (firstVisibleItem + visibleItemCount >= totalItemCount) {
+                    if (!isFetchingMovies) {
+                        getList();
+                    }
+                }
+            }
+        });
+    }
+
+    private void showError() {
+        Toast.makeText(AllActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+    }
     private void selectItem(int position) {
         Fragment fragment = null;
         Intent intent = null;
