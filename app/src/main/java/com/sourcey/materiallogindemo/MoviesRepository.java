@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MoviesRepository {
 
     private static final String BASE_URL = "https://api.themoviedb.org/3/";
-    private static final String LANGUAGE = "en_US";
+    private static String LANGUAGE = "en_US";
 
     private static MoviesRepository repository;
 
@@ -33,6 +33,18 @@ public class MoviesRepository {
         }
 
         return repository;
+    }
+
+    public void changeLenguageToSpanish(){
+        MoviesRepository.LANGUAGE="es_ES";
+    }
+
+    public void changeLenguageToEnglish(){
+        MoviesRepository.LANGUAGE="en_US";
+    }
+
+    public void changeLenguageToFrench(){
+        MoviesRepository.LANGUAGE="fr_FR";
     }
 
     public void getMovies(int pages, final OnGetMoviesCallback callback) {

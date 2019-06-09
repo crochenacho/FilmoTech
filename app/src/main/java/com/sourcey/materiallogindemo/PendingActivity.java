@@ -9,24 +9,54 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
-public class AboutUsActivity extends AppCompatActivity  {
+import java.util.List;
+
+public class PendingActivity extends AppCompatActivity {
     String[] listArray;
     ListView drawerListView;
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
+   // @BindView(R.id.film1) Button _filmBtn;
+
+    public static String LIST_ID = "list_id";
+    private static String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/w780";
+    private static String YOUTUBE_VIDEO_URL = "http://www.youtube.com/watch?v=%s";
+    private static String YOUTUBE_THUMBNAIL_URL = "http://img.youtube.com/vi/%s/0.jpg";
+    private MoviesRepository moviesRepository;
+    private int listId;
+    private RecyclerView moviesList;
+    private MoviesAdapter adapter;
+    private boolean isFetchingMovies;
+    private int currentPage = 1;
+    private List<Genre> movieGenres;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_aboutus);
+        setContentView(R.layout.activity_pending);
+        /*_filmBtn = (Button) findViewById(R.id.film1);
+        if(_filmBtn != null) {
+            _filmBtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), FilmActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }*/
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
@@ -44,11 +74,95 @@ public class AboutUsActivity extends AppCompatActivity  {
             }
         };
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-        drawerListView.setOnItemClickListener(new AboutUsActivity.DrawerItemClickListener());
+        drawerListView.setOnItemClickListener(new PendingActivity.DrawerItemClickListener());
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
+
+       // listId = getIntent().getIntExtra(LIST_ID, listId);
+        listId = 113704;
+        moviesRepository = MoviesRepository.getInstance();
+        moviesList = findViewById(R.id.movies_list);
+        moviesList.setLayoutManager(new LinearLayoutManager(this));
+        getGenres();
+        //getList();
     }
 
+    private void getGenres() {
+        moviesRepository.getGenres(new OnGetGenresCallback() {
+            @Override
+            public void onSuccess(List<Genre> genres) {
+                Log.d("MoviesGenres", "Genre  = " + genres.get(0).getName());
+                movieGenres = genres;
+                getList();
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    private void getList() {
+        isFetchingMovies = true;
+        moviesRepository.getList(listId, new OnGetListCallback() {
+            @Override
+            public void onSuccess(MovieList movieList) {
+                movieList.getItem_count();
+                Log.d("MoviesList", "Movies Count = " + movieList.getItem_count());
+                Log.d("MoviesList", "Movie  = " + movieList.getItems().get(0).getTitle());
+
+                List<Movie> movies = movieList.getItems();
+                if (adapter == null) {
+                    adapter = new MoviesAdapter(movies, movieGenres, callback, movieList);
+                    moviesList.setAdapter(adapter);
+                } else {
+                    adapter.appendMovies(movies);
+                }
+                //currentPage = page;
+                isFetchingMovies = false;
+               /* findViewById(R.id.textView2).setText(movie.getTitle());
+                findViewById(R.id.sinopsis).setText(movie.getOverview());*/
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    OnMoviesClickCallback callback = new OnMoviesClickCallback() {
+        @Override
+        public void onClick(Movie movie) {
+            Intent intent = new Intent(PendingActivity.this, FilmActivity.class);
+            intent.putExtra(FilmActivity.MOVIE_ID, movie.getId());
+            startActivity(intent);
+        }
+    };
+
+    private void setupOnScrollListener() {
+        final LinearLayoutManager manager = new LinearLayoutManager(this);
+        moviesList.setLayoutManager(manager);
+        moviesList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                int totalItemCount = manager.getItemCount();
+                int visibleItemCount = manager.getChildCount();
+                int firstVisibleItem = manager.findFirstVisibleItemPosition();
+
+                if (firstVisibleItem + visibleItemCount >= totalItemCount) {
+                    if (!isFetchingMovies) {
+                        getList();
+                    }
+                }
+            }
+        });
+    }
+
+    private void showError() {
+        Toast.makeText(PendingActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+    }
     private void selectItem(int position) {
         Fragment fragment = null;
         Intent intent = null;

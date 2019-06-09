@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -18,13 +18,16 @@
 
         <TextView
             android:id="@+id/editText"
-            android:layout_width="350dp"
-            android:layout_height="721dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="50dp"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:layout_marginLeft="35dp"
-            android:text="Esta página son las settings" />
+            android:text="IDIOMA"
+            android:textAllCaps="false"
+            android:textColor="@color/jet"
+            app:fontFamily="sans-serif-black" />
     </FrameLayout>
 
     <!-- The navigation drawer -->

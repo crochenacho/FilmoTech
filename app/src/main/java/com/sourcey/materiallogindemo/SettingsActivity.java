@@ -36,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity {
         ArrayList<String> lenguajes= new ArrayList<>();
         lenguajes.add("Español");
         lenguajes.add("English");
+        lenguajes.add("Francais");
 
         ArrayAdapter adp= new ArrayAdapter(SettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, lenguajes);
         miSpinner.setAdapter(adp);
@@ -44,7 +45,17 @@ public class SettingsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String lenguaje=(String) miSpinner.getAdapter().getItem(i);
 
-                Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
+                switch (lenguaje){
+                    case "English":
+                        MoviesRepository.getInstance().changeLenguageToEnglish();
+                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
+                    case "Español":
+                        MoviesRepository.getInstance().changeLenguageToSpanish();
+                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
+                    case "Francais":
+                        MoviesRepository.getInstance().changeLenguageToFrench();
+                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -84,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             case 1:
-                intent = new Intent(this, AllActivity.class);
+                intent = new Intent(this, PendingActivity.class);
                 startActivity(intent);
                 return;
             case 2:

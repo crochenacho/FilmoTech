@@ -180,7 +180,7 @@ public class AllActivity extends AppCompatActivity {
                 startActivity(intent);
                 return;
             case 1:
-                intent = new Intent(this, AllActivity.class);
+                intent = new Intent(this, PendingActivity.class);
                 startActivity(intent);
                 return;
             case 2:
