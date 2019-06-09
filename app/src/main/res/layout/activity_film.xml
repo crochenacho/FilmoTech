@@ -47,18 +47,6 @@
                     android:textSize="32dp" />
 
                 <TextView
-                    android:id="@+id/actor"
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:text="Actor " />
-
-                <TextView
-                    android:id="@+id/director"
-                    android:layout_width="260dp"
-                    android:layout_height="wrap_content"
-                    android:text="Director " />
-
-                <TextView
                     android:id="@+id/release"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -77,6 +65,26 @@
                     android:numStars="5"
                     android:theme="@style/RatingBar"
                     android:isIndicator="true"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/saveBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="70dp"
+                        android:text="Watched" />
+
+                    <Button
+                        android:id="@+id/removeBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="40dp"
+                        android:text="Pending" />
+                </LinearLayout>
 
             </LinearLayout>
 
