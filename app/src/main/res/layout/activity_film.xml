@@ -34,7 +34,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="198dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="25dp"
                 android:orientation="vertical">
@@ -72,14 +72,14 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/saveBtn"
+                        android:id="@+id/saveWatchedBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
                         android:text="Watched" />
 
                     <Button
-                        android:id="@+id/removeBtn"
+                        android:id="@+id/savePendingBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
