@@ -45,7 +45,6 @@ public class FilmActivity extends AppCompatActivity {
     private TextView movieTitle;
     private TextView movieGenres;
     private TextView movieOverview;
-    private TextView movieOverviewLabel;
     private TextView movieReleaseDate;
     private RatingBar movieRating;
     private LinearLayout movieTrailers;
@@ -91,7 +90,6 @@ public class FilmActivity extends AppCompatActivity {
         movieTitle = findViewById(R.id.textView2);
         movieGenres = findViewById(R.id.genres);
         movieOverview = findViewById(R.id.sinopsis);
-        movieOverviewLabel = findViewById(R.id.director);
         movieReleaseDate = findViewById(R.id.release);
         movieRating = findViewById(R.id.ratingBar);
        // movieTrailers = findViewById(R.id.movieTrailers);
@@ -103,7 +101,6 @@ public class FilmActivity extends AppCompatActivity {
             @Override
             public void onSuccess(Movie movie) {
                 movieTitle.setText(movie.getTitle());
-                movieOverviewLabel.setVisibility(View.VISIBLE);
                 movieOverview.setText(movie.getOverview());
                 movieRating.setVisibility(View.VISIBLE);
                 //movieRating.setNumStars(5);
