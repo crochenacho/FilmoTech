@@ -47,6 +47,14 @@
             android:value="com.sourcey.materiallogindemo.SearchResultsActivity" />
         </activity>
         <activity
+            android:name=".PendingActivity"
+            android:label="Pending"
+            android:theme="@style/AppTheme" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value="com.sourcey.materiallogindemo.SearchResultsActivity" />
+        </activity>
+        <activity
             android:name=".SettingsActivity"
             android:label="Settings"
             android:noHistory="true"
