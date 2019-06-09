@@ -9,16 +9,45 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/aboutUsTitle"
+            android:layout_width="230dp"
+            android:layout_height="66dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="70dp"
+            android:ems="10"
+            android:textSize="56dp"
+            android:textColor="@color/black"
+            android:text="About Us" />
+
 
         <TextView
-            android:id="@+id/editText"
+            android:id="@+id/aboutUsBody"
             android:layout_width="350dp"
-            android:layout_height="686dp"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="364dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="205dp"
             android:ems="10"
-            android:inputType="textMultiLine"
-            android:text="Esta pagina tiene el about us. Somos un grupo de estudiantes que han hecho una app top" />
+            android:textSize="15dp"
+            android:textColor="@color/black"
+            android:text="Somos un grupo de estudiantes de Ing. Informática en la UPM y hemos desarrollado esta app en Android con el Android Studio Code. Esperamos que os guste :)" />
+
+        <TextView
+            android:id="@+id/aboutUsLocation"
+            android:layout_width="350dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="100dp"
+            android:ems="10"
+            android:text="Madrid, España "/>
+        <TextView
+            android:id="@+id/aboutUsVersion"
+            android:layout_width="350dp"
+            android:layout_height="36dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="80dp"
+            android:ems="10"
+            android:text="FilmoTech Version 3.2.7" />
     </FrameLayout>
     
     <!-- The navigation drawer -->

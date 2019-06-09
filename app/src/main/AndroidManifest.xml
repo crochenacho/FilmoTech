@@ -40,23 +40,39 @@
             android:theme="@style/AppTheme.Dark" />
         <activity
             android:name=".AllActivity"
-            android:label="AllActivity?"
-            android:theme="@style/AppTheme" />
+            android:label="Watched"
+            android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.sourcey.materiallogindemo.SearchResultsActivity" />
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="Settings"
             android:noHistory="true"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.sourcey.materiallogindemo.SearchResultsActivity" />
+        </activity>
         <activity
             android:name=".AboutUsActivity"
             android:label="About Us"
             android:noHistory="true"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme" >
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.sourcey.materiallogindemo.SearchResultsActivity" />
+        </activity>
         <activity
             android:name=".FilmActivity"
             android:label="Film"
             android:noHistory="true"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/AppTheme">
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value="com.sourcey.materiallogindemo.SearchResultsActivity" />
+        </activity>
         <activity android:name=".SearchResultsActivity"
             android:label="Results" >
             <intent-filter>
