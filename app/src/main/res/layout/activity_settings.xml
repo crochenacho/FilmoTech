@@ -24,7 +24,7 @@
             android:layout_marginTop="70dp"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:text="LENGUAGE"
+            android:text="LANGUAGE"
             android:textAllCaps="false"
             android:textColor="@color/jet"
             app:fontFamily="sans-serif-black" />
