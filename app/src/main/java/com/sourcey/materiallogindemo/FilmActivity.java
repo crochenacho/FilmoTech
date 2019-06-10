@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -80,9 +81,53 @@ public class FilmActivity extends AppCompatActivity {
         movieId = getIntent().getIntExtra(MOVIE_ID, movieId);
         Log.d("MoviesId", "Current id = " + movieId);
 
+        final Button saveWatchedBtn = findViewById(R.id.saveWatchedBtn);
+        saveWatchedBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addMovieToList(113633);
+//                removeMovieFromList(113633);
+            }
+        });
+
+        final Button savePendingBtn = findViewById(R.id.savePendingBtn);
+        savePendingBtn.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                addMovieToList(113704);
+//                removeMovieFromList(113704);
+            }
+        });
+
         moviesRepository = MoviesRepository.getInstance();
         initUI();
         getMovie();
+    }
+
+    private void removeMovieFromList(int listId) {
+        moviesRepository.removeMovieFromList(listId, movieId, new OnRemoveMovieCallBack() {
+            @Override
+            public void onSuccess(AddMovieResponse removeMovieResponse) {
+                Toast.makeText(FilmActivity.this, "Se ha eliminado correctamente.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    private void addMovieToList(int listId) {
+        moviesRepository.addMovieToList(listId, movieId, new OnAddMovieCallBack() {
+            @Override
+            public void onSuccess(AddMovieResponse addMovieResponse) {
+                Toast.makeText(FilmActivity.this, "Se ha añadido correctamente.", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
     }
 
     private void initUI() {
@@ -148,7 +193,7 @@ public class FilmActivity extends AppCompatActivity {
 //        return true;
 //    }
     private void showError() {
-        Toast.makeText(FilmActivity.this, "Please check your internet connection.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(FilmActivity.this, "Ha ocurrido un error.", Toast.LENGTH_SHORT).show();
     }
 
     private void selectItem(int position) {
