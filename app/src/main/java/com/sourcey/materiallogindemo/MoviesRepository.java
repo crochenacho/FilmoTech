@@ -3,6 +3,9 @@ package com.sourcey.materiallogindemo;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -167,7 +170,7 @@ public class MoviesRepository {
                 });
     }
 
-    public void createList(int pages, final OnCreateListCallback callback) {
+    public void createList(final OnCreateListCallback callback) {
        /* ParamsBody params = new ParamsBody("Watched", "List of watched movies", LANGUAGE);
         ListTask listTask = new ListTask() {
             @Override
@@ -185,14 +188,20 @@ public class MoviesRepository {
         Log.i(TAG, "Works until here");
 
         Call<ParamsBody> call = listTask.createTask(params);*/
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "Watched");
+        params.put("description", "List of watched movies");
+        params.put("language", LANGUAGE);
         api.createList("c2ba2a2e0940ab4ad5988c9d704dd7b4", "6dead99aeb0031f71f751067db8ee18172b54ff3",
-                "Watched", "List of watched movies", LANGUAGE)
+                params)
                 .enqueue(new Callback<ListResponse>() {
                     @Override
                     public void onResponse(@NonNull Call<ListResponse> call, @NonNull Response<ListResponse> response) {
+                        System.out.println("INTENTO DE CREACIÓN DE LISTA.");
                         if (response.isSuccessful()) {
                             ListResponse listResponse = response.body();
                             if (listResponse != null && listResponse.getId() != null) {
+                                System.out.println(listResponse.getId());
                                 callback.onSuccess(listResponse, listResponse.getId());
                             } else {
                                 callback.onError();
@@ -206,6 +215,62 @@ public class MoviesRepository {
                     public void onFailure(Call<ListResponse> call, Throwable t) {
                         callback.onError();
                     }
+                });
+    }
+
+    public void addMovieToList(Integer list, Integer id, final OnAddMovieCallBack callback) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("media_id", id);
+        api.addMovieToList(list,"c2ba2a2e0940ab4ad5988c9d704dd7b4", "6dead99aeb0031f71f751067db8ee18172b54ff3",
+                params)
+                .enqueue(new Callback<AddMovieResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<AddMovieResponse> call, @NonNull Response<AddMovieResponse> response) {
+                        if (response.isSuccessful()) {
+                            AddMovieResponse addMovieResponse = response.body();
+                            if (addMovieResponse != null && addMovieResponse.getStatusCode() == 12) {
+                                callback.onSuccess(addMovieResponse);
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddMovieResponse> call, Throwable t) {
+                        callback.onError();
+                    }
+
+                });
+    }
+
+    public void removeMovieFromList(Integer list, Integer id, final OnRemoveMovieCallBack callback) {
+        Map<String, Integer> params = new HashMap<>();
+        params.put("media_id", id);
+        api.removeMovieFromList(list,"c2ba2a2e0940ab4ad5988c9d704dd7b4", "6dead99aeb0031f71f751067db8ee18172b54ff3",
+                params)
+                .enqueue(new Callback<AddMovieResponse>() {
+                    @Override
+                    public void onResponse(@NonNull Call<AddMovieResponse> call, @NonNull Response<AddMovieResponse> response) {
+                        if (response.isSuccessful()) {
+                            AddMovieResponse removeMovieResponse = response.body();
+                            if (removeMovieResponse != null && removeMovieResponse.getStatusCode() == 13) {
+                                callback.onSuccess(removeMovieResponse);
+                            } else {
+                                callback.onError();
+                            }
+                        } else {
+                            callback.onError();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<AddMovieResponse> call, Throwable t) {
+                        callback.onError();
+                    }
+
                 });
     }
 }

@@ -1,9 +1,12 @@
 package com.sourcey.materiallogindemo;
 
+import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -38,20 +41,40 @@ public interface TMDBApi {
             @Query("language") String language
     );
 
+    @Headers({
+            "Content-Type:application/json"
+    })
     @POST("list")
     Call<ListResponse> createList(
             @Query("api_key") String apiKey,
             @Query("session_id") String sessionId,
             //@Body ParamsBody params
-            @Field("name") String name,
-            @Field("description") String description,
-            @Field("language") String language
-    );
+            @Body Map<String, String> params
+            );
 
     @GET("list/{list_id}")
     Call<MovieList> getList(
             @Path("list_id") Integer id,
             @Query("api_key") String apiKey,
             @Query("language") String language
+    );
+
+    @Headers({
+            "Content-Type:application/json"
+    })
+    @POST("list/{list_id}/add_item")
+    Call<AddMovieResponse> addMovieToList(
+            @Path("list_id") Integer id,
+            @Query("api_key") String apiKey,
+            @Query("session_id") String sessionId,
+            @Body Map<String, Integer> params
+    );
+
+    @POST("list/{list_id}/remove_item")
+    Call<AddMovieResponse> removeMovieFromList(
+            @Path("list_id") Integer id,
+            @Query("api_key") String apiKey,
+            @Query("session_id") String sessionId,
+            @Body Map<String, Integer> params
     );
 }
