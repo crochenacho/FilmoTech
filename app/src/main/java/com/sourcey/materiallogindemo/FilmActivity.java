@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -53,6 +54,13 @@ public class FilmActivity extends AppCompatActivity {
     private MoviesRepository moviesRepository;
     private int movieId;
 
+    private RecyclerView moviesList;
+    private MoviesAdapter adapter;
+    private boolean isFetchingMovies;
+    private List<Genre> movieGenresList;
+    private int listId;
+    private int listIdPending;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,27 +88,146 @@ public class FilmActivity extends AppCompatActivity {
 
         movieId = getIntent().getIntExtra(MOVIE_ID, movieId);
         Log.d("MoviesId", "Current id = " + movieId);
-
-        final Button saveWatchedBtn = findViewById(R.id.saveWatchedBtn);
-        saveWatchedBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addMovieToList(113633);
-//                removeMovieFromList(113633);
-            }
-        });
-
-        final Button savePendingBtn = findViewById(R.id.savePendingBtn);
-        savePendingBtn.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                addMovieToList(113704);
-//                removeMovieFromList(113704);
-            }
-        });
-
         moviesRepository = MoviesRepository.getInstance();
+        listId = 113633;
+        getGenresWatched();
+        listIdPending = 113704;
+        getGenresPending();
+
         initUI();
         getMovie();
     }
+
+    private void getGenresWatched() {
+        moviesRepository.getGenres(new OnGetGenresCallback() {
+            @Override
+            public void onSuccess(List<Genre> genres) {
+                Log.d("MoviesGenres", "Genre  = " + genres.get(0).getName());
+                movieGenresList = genres;
+                getListWatched();
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    private void getListWatched() {
+        moviesRepository.getList(listId, new OnGetListCallback() {
+            @Override
+            public void onSuccess(MovieList movieList) {
+                movieList.getItem_count();
+                Log.d("MoviesList", "Movies Count = " + movieList.getItem_count());
+                Log.d("MoviesList", "Movie  = " + movieList.getItems().get(0).getTitle());
+
+                List<Movie> movies = movieList.getItems();
+
+                    final Button saveWatchedBtn = findViewById(R.id.saveWatchedBtn);
+                    for (int i = 0; i < movies.size(); i++) {
+                        if (movies.get(i).getId() == movieId) {
+                            saveWatchedBtn.setText("No Watched");
+                            saveWatchedBtn.setTag(0);
+                            break;
+                        } else {
+                            saveWatchedBtn.setTag(1);
+                            saveWatchedBtn.setText("Watched");
+                        }
+                    }
+                    saveWatchedBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final int status = (Integer) v.getTag();
+                            if (status == 1) {
+                                addMovieToList(113633);
+                                saveWatchedBtn.setText("No Watched");
+                                v.setTag(0); //pause
+                            } else {
+                                removeMovieFromList(113633);
+                                saveWatchedBtn.setText("Watched");
+                                v.setTag(1); //pause
+                            }
+                        }
+                    });
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    private void getGenresPending() {
+        moviesRepository.getGenres(new OnGetGenresCallback() {
+            @Override
+            public void onSuccess(List<Genre> genres) {
+                Log.d("MoviesGenres", "Genre  = " + genres.get(0).getName());
+                movieGenresList = genres;
+                getListPending();
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    private void getListPending() {
+        moviesRepository.getList(listIdPending, new OnGetListCallback() {
+            @Override
+            public void onSuccess(MovieList movieList) {
+                movieList.getItem_count();
+                Log.d("MoviesList", "Movies Count = " + movieList.getItem_count());
+                Log.d("MoviesList", "Movie  = " + movieList.getItems().get(0).getTitle());
+
+                List<Movie> movies = movieList.getItems();
+
+                final Button savePendingBtn = findViewById(R.id.savePendingBtn);
+                for (int i = 0; i < movies.size(); i++) {
+                    if (movies.get(i).getId() == movieId) {
+                        savePendingBtn.setText("No Pending");
+                        savePendingBtn.setTag(0);
+                        break;
+                    } else {
+                        savePendingBtn.setTag(1);
+                        savePendingBtn.setText("Pending");
+                    }
+                }
+                savePendingBtn.setOnClickListener( new View.OnClickListener() {
+                    @Override
+                    public void onClick (View v) {
+                        final int status =(Integer) v.getTag();
+                        if(status == 1) {
+                            addMovieToList(113704);
+                            savePendingBtn.setText("No Pending");
+                            v.setTag(0); //pause
+                        } else {
+                            removeMovieFromList(113704);
+                            savePendingBtn.setText("Pending");
+                            v.setTag(1); //pause
+                        }
+                    }
+                });
+            }
+
+            @Override
+            public void onError() {
+                showError();
+            }
+        });
+    }
+
+    OnMoviesClickCallback callback = new OnMoviesClickCallback() {
+        @Override
+        public void onClick(Movie movie) {
+            Intent intent = new Intent(FilmActivity.this, FilmActivity.class);
+            intent.putExtra(FilmActivity.MOVIE_ID, movie.getId());
+            startActivity(intent);
+        }
+    };
 
     private void removeMovieFromList(int listId) {
         moviesRepository.removeMovieFromList(listId, movieId, new OnRemoveMovieCallBack() {
@@ -111,7 +238,7 @@ public class FilmActivity extends AppCompatActivity {
 
             @Override
             public void onError() {
-                showError();
+                Toast.makeText(FilmActivity.this, "La película no está en la lista", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -125,7 +252,7 @@ public class FilmActivity extends AppCompatActivity {
 
             @Override
             public void onError() {
-                showError();
+                Toast.makeText(FilmActivity.this, "Esta película ya estaba añadida en la lista", Toast.LENGTH_SHORT).show();
             }
         });
     }

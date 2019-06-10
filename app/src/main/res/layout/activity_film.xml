@@ -76,15 +76,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="70dp"
-                        android:text="Watched" />
+                        android:text="Watched"
+                        android:theme="@style/redButton"/>
 
                     <Button
                         android:id="@+id/savePendingBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="40dp"
-                        android:text="Pending" />
+                        android:text="Pending"
+                        android:theme="@style/redButton"/>
                 </LinearLayout>
+
+
 
             </LinearLayout>
 
