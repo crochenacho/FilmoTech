@@ -10,32 +10,76 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/aboutUsTitle"
-            android:layout_width="230dp"
-            android:layout_height="66dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"
+            android:id="@+id/aboutUsDevelopers"
+            android:layout_width="260dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="150dp"
             android:ems="10"
-            android:text="About Us"
-            android:textAllCaps="true"
-            android:textColor="@color/jet"
-            android:textSize="50sp"
-            android:textStyle="italic"
-            android:typeface="normal"
-            app:fontFamily="sans-serif-condensed-medium" />
-
+            android:lines="5"
+            android:maxLines="5"
+            android:text="Developers:"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/aboutUsDevelopers1"
+            android:layout_width="260dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="170dp"
+            android:maxLines="5"
+            android:lines="5"
+            android:ems="10"
+            android:text="Juan Ignacio Croche Andreu"/>
+        <TextView
+            android:id="@+id/aboutUsDevelopers2"
+            android:layout_width="260dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="190dp"
+            android:maxLines="5"
+            android:lines="5"
+            android:ems="10"
+            android:text="David Rabano Neila"/>
+        <TextView
+            android:id="@+id/aboutUsDevelopers3"
+            android:layout_width="260dp"
+            android:layout_height="70dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="210dp"
+            android:maxLines="5"
+            android:lines="5"
+            android:ems="10"
+            android:text="Alex Vizcaino Alemany"/>
 
         <TextView
-            android:id="@+id/aboutUsBody"
-            android:layout_width="350dp"
-            android:layout_height="364dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="205dp"
+            android:id="@+id/aboutUsTool"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="250dp"
             android:ems="10"
-            android:textSize="15sp"
-            android:textColor="@color/black"
-            android:text="Somos un grupo de estudiantes de Ing. Informática en la UPM y hemos desarrollado esta app en Android con el Android Studio. Esperamos que os guste :)" />
-
+            android:lines="2"
+            android:maxLines="2"
+            android:text="Development Tool:"
+            android:textAllCaps="false"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/aboutUsTool1"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left|top"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="270dp"
+            android:maxLines="2"
+            android:lines="2"
+            android:ems="10"
+            android:text="Android Studio"/>
         <TextView
             android:id="@+id/aboutUsLocation"
             android:layout_width="350dp"

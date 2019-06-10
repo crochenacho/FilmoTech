@@ -27,16 +27,29 @@ public class SettingsActivity extends AppCompatActivity {
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
     private Spinner miSpinner;
+
+    public void removeL(ArrayList<String> list){
+        int i=0;
+        while(i<3){
+            list.remove(i);
+            i++;
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        miSpinner= (Spinner) findViewById(R.id.miSpinner);
+
+        miSpinner=findViewById(R.id.miSpinner);
 
         ArrayList<String> lenguajes= new ArrayList<>();
-        lenguajes.add("Español");
+        lenguajes.add("---");
         lenguajes.add("English");
+        lenguajes.add("Español");
         lenguajes.add("Francais");
+
 
         ArrayAdapter adp= new ArrayAdapter(SettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, lenguajes);
         miSpinner.setAdapter(adp);
@@ -44,18 +57,23 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 String lenguaje=(String) miSpinner.getAdapter().getItem(i);
+                MoviesRepository repository= MoviesRepository.getInstance();
 
-                switch (lenguaje){
-                    case "English":
-                        MoviesRepository.getInstance().changeLenguageToEnglish();
-                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
-                    case "Español":
-                        MoviesRepository.getInstance().changeLenguageToSpanish();
-                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
-                    case "Francais":
-                        MoviesRepository.getInstance().changeLenguageToFrench();
-                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: "+ lenguaje, Toast.LENGTH_SHORT).show();
+                if (lenguaje == "---") {
+                   //doNothing
+                }else {
+                    if (lenguaje == "Español") {
+                        repository.changeLenguageToSpanish();
+                        Toast.makeText(SettingsActivity.this, "Idioma seleccionado: Español ", Toast.LENGTH_SHORT).show();
+                    }else if (lenguaje == "English") {
+                        repository.changeLenguageToEnglish();
+                        Toast.makeText(SettingsActivity.this, "Lenguage selected: English ", Toast.LENGTH_SHORT).show();
+                    }else if (lenguaje == "Francais") {
+                        repository.changeLenguageToFrench();
+                        Toast.makeText(SettingsActivity.this, "Langue sélectionnée: Francais ", Toast.LENGTH_SHORT).show();
+                    }
                 }
+
             }
 
             @Override
@@ -63,6 +81,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
 
         listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);

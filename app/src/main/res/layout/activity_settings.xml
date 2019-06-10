@@ -13,7 +13,7 @@
             android:id="@+id/miSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="90dp"
             android:text="Lenguage" />
 
         <TextView
@@ -21,10 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="3dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:text="IDIOMA"
+            android:text="LENGUAGE"
             android:textAllCaps="false"
             android:textColor="@color/jet"
             app:fontFamily="sans-serif-black" />
