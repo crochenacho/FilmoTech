@@ -37,6 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="25dp"
+                android:layout_marginRight="20dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -62,9 +63,9 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:isIndicator="true"
                     android:numStars="5"
-                    android:theme="@style/RatingBar"
-                    android:isIndicator="true"/>
+                    android:theme="@style/RatingBar" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -75,19 +76,18 @@
                         android:id="@+id/saveWatchedBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="70dp"
+                        android:layout_marginLeft="60dp"
                         android:text="Watched"
-                        android:theme="@style/redButton"/>
+                        android:theme="@style/redButton" />
 
                     <Button
                         android:id="@+id/savePendingBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
+                        android:layout_marginLeft="20dp"
                         android:text="Pending"
-                        android:theme="@style/redButton"/>
+                        android:theme="@style/redButton" />
                 </LinearLayout>
-
 
 
             </LinearLayout>
