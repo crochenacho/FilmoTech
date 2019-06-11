@@ -23,11 +23,25 @@ public class AboutUsActivity extends AppCompatActivity  {
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aboutus);
-        listArray = getResources().getStringArray(R.array.listArray);
+        switch(SettingsActivity.idioma){
+            case "English":
+                listArray=getResources().getStringArray(R.array.listArrayEnglish);
+                setTitle("Settings");
+                break;
+            case "Español":
+                listArray=getResources().getStringArray(R.array.listArrayEspañol);
+                setTitle("Ajustes");
+                break;
+            case "Francais":
+                listArray=getResources().getStringArray(R.array.listArrayFrancais);
+                setTitle("À propos de nous");
+                break;
+        }
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

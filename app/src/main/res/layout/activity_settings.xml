@@ -13,8 +13,7 @@
             android:id="@+id/miSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:text="Lenguage" />
+            android:layout_marginTop="90dp"/>
 
         <TextView
             android:id="@+id/editText"
@@ -24,7 +23,6 @@
             android:layout_marginTop="70dp"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:text="LANGUAGE"
             android:textAllCaps="false"
             android:textColor="@color/jet"
             app:fontFamily="sans-serif-black" />

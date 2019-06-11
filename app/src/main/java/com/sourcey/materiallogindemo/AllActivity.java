@@ -65,7 +65,20 @@ public class AllActivity extends AppCompatActivity {
                 }
             });
         }*/
-        listArray = getResources().getStringArray(R.array.listArray);
+        switch(SettingsActivity.idioma){
+            case "English":
+                listArray=getResources().getStringArray(R.array.listArrayEnglish);
+                setTitle("Watched");
+                break;
+            case "Español":
+                listArray=getResources().getStringArray(R.array.listArrayEspañol);
+                setTitle("Vistas");
+                break;
+            case "Francais":
+                listArray=getResources().getStringArray(R.array.listArrayFrancais);
+                setTitle("Vu");
+                break;
+        }
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
