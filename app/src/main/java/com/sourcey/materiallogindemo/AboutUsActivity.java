@@ -31,11 +31,11 @@ public class AboutUsActivity extends AppCompatActivity  {
         switch(SettingsActivity.idioma){
             case "English":
                 listArray=getResources().getStringArray(R.array.listArrayEnglish);
-                setTitle("Settings");
+                setTitle("About Us");
                 break;
             case "Español":
                 listArray=getResources().getStringArray(R.array.listArrayEspañol);
-                setTitle("Ajustes");
+                setTitle("Acerca de");
                 break;
             case "Francais":
                 listArray=getResources().getStringArray(R.array.listArrayFrancais);

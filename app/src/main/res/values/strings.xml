@@ -24,8 +24,8 @@
         <item>Salir</item>
     </string-array>
     <string-array name="listArrayFrancais">
-        <item>Vu</item>
-        <item>Pendants</item>
+        <item>Vus</item>
+        <item>En Attente</item>
         <item>Réglages</item>
         <item>À propos de nous</item>
         <item>Connectez Out</item>

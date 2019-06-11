@@ -65,12 +65,15 @@ public class SearchResultsActivity extends AppCompatActivity {
         switch(SettingsActivity.idioma){
             case "English":
                 listArray= getResources().getStringArray(R.array.listArrayEnglish);
+                setTitle("Results");
                 break;
             case "Español":
                 listArray=getResources().getStringArray(R.array.listArrayEspañol);
+                setTitle("Resultados");
                 break;
             case "Francais":
                 listArray=getResources().getStringArray(R.array.listArrayFrancais);
+                setTitle("résultats");
                 break;
         }
         drawerListView = (ListView)findViewById(R.id.left_drawer);
