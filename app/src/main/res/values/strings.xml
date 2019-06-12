@@ -9,14 +9,29 @@
     <string name="film_3">FILM 3</string>
     <string name="film_5">FILM 5</string>
     <string name="film_6">FILM 6</string>
-    <string-array name="listArray">
+    <string-array name="listArrayEnglish">
         <item>Watched</item>
         <item>Pending</item>
         <item>Settings</item>
         <item>About Us</item>
         <item>Logout</item>
-
     </string-array>
+    <string-array name="listArrayEspañol">
+        <item>Vistas</item>
+        <item>Pendientes</item>
+        <item>Ajustes</item>
+        <item>Acerca nuestra</item>
+        <item>Salir</item>
+    </string-array>
+    <string-array name="listArrayFrancais">
+        <item>Vus</item>
+        <item>En Attente</item>
+        <item>Réglages</item>
+        <item>À propos de nous</item>
+        <item>Connectez Out</item>
+    </string-array>
+
+
     <string name="open_drawer">Open Drawer</string>
     <string name="close_drawer">Close Drawer</string>
     <string name="description">description</string>

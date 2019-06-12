@@ -53,6 +53,8 @@ public class FilmActivity extends AppCompatActivity {
     private LinearLayout movieReviews;
     private MoviesRepository moviesRepository;
     private int movieId;
+    private Button watchedButton;
+    private Button pendingButton;
 
     private RecyclerView moviesList;
     private MoviesAdapter adapter;
@@ -65,7 +67,27 @@ public class FilmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_film);
-        listArray = getResources().getStringArray(R.array.listArray);
+
+        pendingButton=findViewById(R.id.savePendingBtn);
+        watchedButton=findViewById(R.id.saveWatchedBtn);
+        switch(SettingsActivity.idioma){
+            case "English":
+                listArray= getResources().getStringArray(R.array.listArrayEnglish);
+                pendingButton.setText("PENDING");
+                watchedButton.setText("WATCHED");
+                break;
+            case "Español":
+                listArray=getResources().getStringArray(R.array.listArrayEspañol);
+                setTitle("Pelicula");
+                pendingButton.setText("PENDIENTE");
+                watchedButton.setText("VISTA");
+                break;
+            case "Francais":
+                listArray=getResources().getStringArray(R.array.listArrayFrancais);
+                pendingButton.setText("EN ATTENTE");
+                watchedButton.setText("VU");
+                break;
+        }
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -127,12 +149,24 @@ public class FilmActivity extends AppCompatActivity {
                     final Button saveWatchedBtn = findViewById(R.id.saveWatchedBtn);
                     for (int i = 0; i < movies.size(); i++) {
                         if (movies.get(i).getId() == movieId) {
-                            saveWatchedBtn.setText("No Watched");
+                            if(SettingsActivity.idioma=="Español") {
+                                saveWatchedBtn.setText("No Vista");
+                            }else if(SettingsActivity.idioma=="Francais"){
+                                saveWatchedBtn.setText("Pas vu");
+                            }else if(SettingsActivity.idioma=="English"){
+                                saveWatchedBtn.setText("No Watched");
+                            }
                             saveWatchedBtn.setTag(0);
                             break;
                         } else {
                             saveWatchedBtn.setTag(1);
-                            saveWatchedBtn.setText("Watched");
+                            if(SettingsActivity.idioma=="Español") {
+                                saveWatchedBtn.setText("Vista");
+                            }else if(SettingsActivity.idioma=="Francais"){
+                                saveWatchedBtn.setText("vu");
+                            }else if(SettingsActivity.idioma=="English"){
+                                saveWatchedBtn.setText("Watched");
+                            }
                         }
                     }
                     saveWatchedBtn.setOnClickListener(new View.OnClickListener() {
@@ -141,11 +175,23 @@ public class FilmActivity extends AppCompatActivity {
                             final int status = (Integer) v.getTag();
                             if (status == 1) {
                                 addMovieToList(113633);
-                                saveWatchedBtn.setText("No Watched");
+                                if(SettingsActivity.idioma=="Español") {
+                                    saveWatchedBtn.setText("No Vista");
+                                }else if(SettingsActivity.idioma=="Francais"){
+                                    saveWatchedBtn.setText("Pas vu");
+                                }else if(SettingsActivity.idioma=="English"){
+                                    saveWatchedBtn.setText("No Watched");
+                                }
                                 v.setTag(0); //pause
                             } else {
                                 removeMovieFromList(113633);
-                                saveWatchedBtn.setText("Watched");
+                                if(SettingsActivity.idioma=="Español") {
+                                    saveWatchedBtn.setText("Vista");
+                                }else if(SettingsActivity.idioma=="Francais"){
+                                    saveWatchedBtn.setText("vu");
+                                }else if(SettingsActivity.idioma=="English"){
+                                    saveWatchedBtn.setText("Watched");
+                                }
                                 v.setTag(1); //pause
                             }
                         }
@@ -188,12 +234,24 @@ public class FilmActivity extends AppCompatActivity {
                 final Button savePendingBtn = findViewById(R.id.savePendingBtn);
                 for (int i = 0; i < movies.size(); i++) {
                     if (movies.get(i).getId() == movieId) {
-                        savePendingBtn.setText("No Pending");
+                        if(SettingsActivity.idioma=="Español") {
+                            savePendingBtn.setText("No Pendiente");
+                        }else if(SettingsActivity.idioma=="Francais"){
+                            savePendingBtn.setText("pas en attente");
+                        }else if(SettingsActivity.idioma=="English"){
+                            savePendingBtn.setText("No pending");
+                        }
                         savePendingBtn.setTag(0);
                         break;
                     } else {
                         savePendingBtn.setTag(1);
-                        savePendingBtn.setText("Pending");
+                        if(SettingsActivity.idioma=="Español") {
+                            savePendingBtn.setText("Pendiente");
+                        }else if(SettingsActivity.idioma=="Francais"){
+                            savePendingBtn.setText("en attente");
+                        }else if(SettingsActivity.idioma=="English"){
+                            savePendingBtn.setText("Pending");
+                        }
                     }
                 }
                 savePendingBtn.setOnClickListener( new View.OnClickListener() {
@@ -202,11 +260,23 @@ public class FilmActivity extends AppCompatActivity {
                         final int status =(Integer) v.getTag();
                         if(status == 1) {
                             addMovieToList(113704);
-                            savePendingBtn.setText("No Pending");
+                            if(SettingsActivity.idioma=="Español") {
+                                savePendingBtn.setText("No Pendiente");
+                            }else if(SettingsActivity.idioma=="Francais"){
+                                savePendingBtn.setText("pas en attente");
+                            }else if(SettingsActivity.idioma=="English"){
+                                savePendingBtn.setText("No pending");
+                            }
                             v.setTag(0); //pause
                         } else {
                             removeMovieFromList(113704);
-                            savePendingBtn.setText("Pending");
+                            if(SettingsActivity.idioma=="Español") {
+                                savePendingBtn.setText("Pendiente");
+                            }else if(SettingsActivity.idioma=="Francais"){
+                                savePendingBtn.setText("en attente");
+                            }else if(SettingsActivity.idioma=="English"){
+                                savePendingBtn.setText("Pending");
+                            }
                             v.setTag(1); //pause
                         }
                     }

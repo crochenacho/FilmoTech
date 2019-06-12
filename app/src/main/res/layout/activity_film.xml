@@ -77,7 +77,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="60dp"
-                        android:text="Watched"
                         android:theme="@style/redButton" />
 
                     <Button
@@ -85,7 +84,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
-                        android:text="Pending"
                         android:theme="@style/redButton" />
                 </LinearLayout>
 

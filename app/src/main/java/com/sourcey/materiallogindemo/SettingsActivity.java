@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -27,14 +28,8 @@ public class SettingsActivity extends AppCompatActivity {
     ActionBarDrawerToggle mActionBarDrawerToggle;
     DrawerLayout mDrawerLayout;
     private Spinner miSpinner;
-
-    public void removeL(ArrayList<String> list){
-        int i=0;
-        while(i<3){
-            list.remove(i);
-            i++;
-        }
-    }
+    private TextView edit;
+    public static String idioma ="English";
 
 
     @Override
@@ -42,13 +37,44 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        switch(idioma){
+            case "English":
+                listArray=getResources().getStringArray(R.array.listArrayEnglish);
+                setTitle("Settings");
+                break;
+            case "Español":
+                listArray=getResources().getStringArray(R.array.listArrayEspañol);
+                setTitle("Ajustes");
+                break;
+            case "Francais":
+                listArray=getResources().getStringArray(R.array.listArrayFrancais);
+                setTitle("Réglages");
+                break;
+        }
+
         miSpinner=findViewById(R.id.miSpinner);
+        edit=findViewById(R.id.editText);
 
         ArrayList<String> lenguajes= new ArrayList<>();
         lenguajes.add("---");
         lenguajes.add("English");
         lenguajes.add("Español");
         lenguajes.add("Francais");
+
+
+        switch(idioma){
+            case "English":
+                edit.setText("SELECT LANGUAGE");
+                break;
+            case "Español":
+                edit.setText("SELECCIONE UN IDIOMA");
+                break;
+            case "Francais":
+                edit.setText("CHOISIR UNA LANGUE");
+                break;
+        }
+
+
 
 
         ArrayAdapter adp= new ArrayAdapter(SettingsActivity.this, android.R.layout.simple_spinner_dropdown_item, lenguajes);
@@ -65,13 +91,26 @@ public class SettingsActivity extends AppCompatActivity {
                     if (lenguaje == "Español") {
                         repository.changeLenguageToSpanish();
                         Toast.makeText(SettingsActivity.this, "Idioma seleccionado: Español ", Toast.LENGTH_SHORT).show();
+                        listArray=getResources().getStringArray(R.array.listArrayEspañol);
+                        edit.setText("SELECCIONE UN IDIOMA");
+                        setTitle("Ajustes");
+                        idioma=lenguaje;
                     }else if (lenguaje == "English") {
                         repository.changeLenguageToEnglish();
                         Toast.makeText(SettingsActivity.this, "Lenguage selected: English ", Toast.LENGTH_SHORT).show();
+                        edit.setText("SELECT LANGUAGE");
+                        listArray=getResources().getStringArray(R.array.listArrayEnglish);
+                        setTitle("Settings");
+                        idioma=lenguaje;
                     }else if (lenguaje == "Francais") {
                         repository.changeLenguageToFrench();
                         Toast.makeText(SettingsActivity.this, "Langue sélectionnée: Francais ", Toast.LENGTH_SHORT).show();
+                        listArray=getResources().getStringArray(R.array.listArrayFrancais);
+                        edit.setText("CHOISIR UNA LANGUE");
+                        setTitle("Réglages");
+                        idioma=lenguaje;
                     }
+
                 }
 
             }
@@ -83,7 +122,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
 
-        listArray = getResources().getStringArray(R.array.listArray);
+        //listArray = getResources().getStringArray(R.array.listArray);
         drawerListView = (ListView)findViewById(R.id.left_drawer);
         drawerListView.setAdapter(new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item, listArray));
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
